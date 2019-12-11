@@ -17,7 +17,7 @@ At the time of writing, this means that every Rust release candidate is tested a
 
 One of the key takeaways I took from the talk, was that **these test runs take around a week**. They currently run on a single AWS EC2 instance (as well as a single Microsoft Azure instance). 
 
-Curiousity got the better of me and I started thinking, could this be improved? Could we shorten these test cycle runs, while keeping the total cost the same? This feels like an [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) problem, well suited to horizontal scaling. Could we shard over lots of EC2 instances? What about technologies such as [AWS Lambda](https://aws.amazon.com/lambda/)?
+Curiousity got the better of me and I started thinking, could this be improved? Could we shorten these test cycle runs, while keeping the total cost the same? This feels like an [embarrassingly parallel problem](https://en.wikipedia.org/wiki/Embarrassingly_parallel), well suited to horizontal scaling. Could we shard over lots of EC2 instances? What about technologies such as [AWS Lambda](https://aws.amazon.com/lambda/)?
 
 As an [AWS employee](https://www.linkedin.com/in/paul-maddox/), I have the benefit of being able to experiment with AWS services in an account that I am not directly billed for. While there is an emphasis on [frugality](https://www.amazon.jobs/en/principles) at Amazon, being able to experiment and improve these test cycle times at no cost to the Rust team is of benefit to the whole community. 
 
