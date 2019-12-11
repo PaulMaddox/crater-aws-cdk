@@ -136,7 +136,7 @@ WIP. Rough plan:
  - Caching?
  - Limited to 15mins for the build and test of each package.
  - Default Lambda limits allow 1,000 concurrent crates to be tested. If we assume that we can test 0.14 crates per second (the rate we get from c5.2xlarge for lack of better data), then we are probably looking at around 7 seconds per crate and a total test run time of around 1 minute if my napkin calculations are correct...
-  - The cost for the above would be around $30 per test run
+  - The cost for the above would be around $30 per test run (based on the maximum Lambda memory configuration of 3GB).
 
 ## Conclusion
 
