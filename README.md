@@ -11,7 +11,7 @@ I recently watched a great talk delivered by
 
  ![shipping_schedule](https://imgur.com/u4TLHgr.png)
 
-One of the reasons the Rust team can release at such a frequency, is their test suite. It uses a open source tool called [crator](https://github.com/rust-lang/crater) to automatically build, and test a huge number of popular crates from both [crates.io](https://crates.io), and [https://github.com](GitHub) against new Rust releases.
+One of the reasons the Rust team can release at such a frequency, is their test suite. It uses a open source tool called [crator](https://github.com/rust-lang/crater) to automatically build, and test a huge number of popular crates from both [crates.io](https://crates.io), and [GitHub](https://github.com) against new Rust releases.
 
 At the time of writing, this means that every Rust release candidate is tested against 84,389 crates (52,199 from GitHub, and 32,190 from crates.io).
 
