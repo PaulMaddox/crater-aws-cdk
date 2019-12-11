@@ -65,7 +65,7 @@ $ time cargo run -- run-graph --ex full --threads 8
 
 ```
 
-Given that a test run takes just under 1 week to complete, and the current Rust configuration is to leave use a single instance, left running 24/7 - that means that there is a limit of 4 test runs per month. 
+Given that a test run takes just under 1 week to complete, and the current Rust configuration is to use a single instance, left running 24/7 - that means that there is a limit of 4 test runs per month. 
 
 We can calculate the total cost per test run to be the monthly cost of the instance + EBS / 4.
 
