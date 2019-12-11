@@ -134,6 +134,7 @@ WIP. Rough plan:
  
  Caveats: 
 
+ - A function can use up to 5 layers at a time. The total unzipped size of the function and all layers can't exceed the unzipped deployment package size limit of 250 MB. Each Lambda function invocation also gets 512MB of /tmp. How much can we shrink the build/test environment?
  - Caching?
  - Limited to 15mins for the build and test of each package.
  - The current method of executing crator uses Docker to block outbound network access when building and testing crates (for security reasons). This approach will not work with Lambda, however there are other methods that should achieve the same effect (such as running in an isolated VPC/subnet).
