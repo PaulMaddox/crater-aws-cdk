@@ -26,7 +26,16 @@ $ cargo run -- define-ex --ex full --crate-select=full --cap-lints=forbid stable
 $ date
 Wed Dec 11 09:29:18 UTC 2019
 $ time cargo run -- run-graph --ex full --threads 8
-
-
-
 ```
+
+## Scaling Vertically
+
+As an experiment, lets start by just scaling up the instance size to something huge.
+
+While this won't help us stay within the "same price or less" criteria, it will give a guideline for what is possible by just throwing hardware at the problem.
+
+The i3en.24xlarge instance type has 96 vCPUs, 768GB RAM, and 8x 7500GB NVMe SSDs (so no need for EBS).
+
+Instance:       $7,919.04/month
+EBS Volume:     $0/month
+Total:          $7,919.04/month
