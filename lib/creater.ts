@@ -36,11 +36,14 @@ export class Crater extends cdk.Construct {
         // Setup the instance ready for crater
         // asg.addUserData("growpart /dev/nvme0n1 1");
         // asg.addUserData("resize2fs /dev/nvme0n1p1");
+        asg.addUserData("mkfs -t xfs /dev/nvme1n1");
+        asg.addUserData("mkdir -p /var/lib/docker");
+        asg.addUserData("mount /dev/nvme1n1 /var/lib/docker");
         asg.addUserData("yum update -y");
         asg.addUserData("yum install -y git docker");
         asg.addUserData("systemctl enable docker.service");
         asg.addUserData("systemctl start docker.service");
-        asg.addUserData("docker pull rustops/crates-build-env:latest");
+        asg.addUserData("docker pull rustops/crates-build-env");
 
     }
 
