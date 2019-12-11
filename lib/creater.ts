@@ -25,7 +25,7 @@ export class Crater extends cdk.Construct {
                 generation: AmazonLinuxGeneration.AMAZON_LINUX_2,
             }),
             blockDevices: [{
-                deviceName: "/dev/nvme1n1",
+                deviceName: "/dev/sdf",
                 volume: BlockDeviceVolume.ebs(2000),
             }],
         })
