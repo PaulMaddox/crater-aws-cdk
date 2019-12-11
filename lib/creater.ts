@@ -33,8 +33,8 @@ export class Crater extends cdk.Construct {
         asg.connections.allowFromAnyIpv4(ec2.Port.tcp(22));
 
         // Setup the instance ready for crater
-        asg.addUserData("growpart /dev/nvme0n1 1")
-        asg.addUserData("resize2fs /dev/nvme0n1p1")
+        // asg.addUserData("growpart /dev/nvme0n1 1");
+        // asg.addUserData("resize2fs /dev/nvme0n1p1");
         asg.addUserData("yum update -y");
         asg.addUserData("yum install -y git docker");
         asg.addUserData("systemctl enable docker.service");
