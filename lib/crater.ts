@@ -37,12 +37,10 @@ export class Crater extends cdk.Construct {
 
         // If we're using an additional EBS volume, make it available
         // for both crater (/root) and docker (/var/lib/docker)
-        if (props.ebs) {
-            asg.addUserData("mkfs -t xfs /dev/nvme1n1");
-            asg.addUserData("mount /dev/nvme1n1 /root");
-            asg.addUserData("mkdir -p /root/docker");
-            asg.addUserData("ln -sf /root/docker /var/lib/docker");
-        }
+        asg.addUserData("mkfs -t xfs /dev/nvme1n1");
+        asg.addUserData("mount /dev/nvme1n1 /root");
+        asg.addUserData("mkdir -p /root/docker");
+        asg.addUserData("ln -sf /root/docker /var/lib/docker");
 
         // Set up crater
         asg.addUserData("yum update -y");
