@@ -15,7 +15,7 @@ export class CraterAwsCdkStack extends cdk.Stack {
     const crator = new Crater(this, 'Crater', {
       vpc,
       instanceType: "c5.2xlarge",
-      keyName: "pmaddox@amazon.com"
+      keyName: "macbook"
     });
 
 
