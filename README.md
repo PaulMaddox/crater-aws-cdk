@@ -37,6 +37,8 @@ EBS Volume:     $200.00/month
 Total:          $448.20/month
 ```
 
+![htop_c5.2xlarge](https://imgur.com/wSSfNl9.png)
+
 On this setup, running a full test run takes:
 
 ```
@@ -63,7 +65,11 @@ $ time cargo run -- run-graph --ex full --threads 8
 
 ```
 
-![htop_c5.2xlarge](https://imgur.com/wSSfNl9.png)
+Given that a test run takes just under 1 week to complete, and the current Rust configuration is to leave use a single instance, left running 24/7 - that means that there is a limit of 4 test runs per month. 
+
+We can calculate the total cost per test run to be the monthly cost of the instance + EBS / 4.
+
+**Total cost per test run: $112.05**
 
 ## Scaling Vertically
 
@@ -78,6 +84,10 @@ Instance:       $7,919.04/month
 EBS Volume:     $0/month
 Total:          $7,919.04/month
 ```
+
+Wheeey, look at all of those CPUs go...
+
+![htop_i3en.24xlarge](https://imgur.com/avTgN9N.png)
 
 On this setup, running a full test run takes:
 
@@ -104,6 +114,30 @@ $ time cargo run -- run-graph --ex full --threads 96
 # Estimated seconds for completion:   17.83 hours
 ```
 
-Wheeey, look at all of those CPUs go...
+**Total cost per test 18 hour test run: $195.264**
 
-![htop_i3en.24xlarge](https://imgur.com/avTgN9N.png)
+## Scaling Horizonally on Amazon EC2
+
+WIP. Rough plan: 
+
+ - Using Spot? How much does caching actually matter?
+ - Spot cost of the `i3en.24xlarge` is $3.2544 which would mean each full test run would come in at 18hrs with a cost of $58.57
+...
+
+## Scaling Horizontally on AWS Lambda
+
+WIP. Rough plan:
+
+ - Use [aws-lambda-container-image-converter](https://github.com/awslabs/aws-lambda-container-image-converter) to create Lambda layers from the required docker images
+ - Create a [Step Function](https://aws.amazon.com/step-functions/) that enumerates all of the crates to build and test, and then runs a single Lambda invoke for each crate build/test. Aggregate results, and combine to a single SQLite database and generate report.
+ 
+ Caveats: 
+
+ - Caching?
+ - Limited to 15mins for the build and test of each package.
+ - Default Lambda limits allow 1,000 concurrent crates to be tested. If we assume that we can test 0.14 crates per second (the rate we get from c5.2xlarge for lack of better data), then we are probably looking at around 7 seconds per crate and a total test run time of around 1 minute if my napkin calculations are correct...
+  - The cost for the above would be around $30 per test run
+
+
+
+
