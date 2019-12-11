@@ -11,13 +11,13 @@ I recently watched a great talk delivered by
 
  ![shipping_schedule](https://imgur.com/u4TLHgr.png)
 
-One of the reasons the Rust team can release at such a frequency, is that their test suite. It uses a tool called [crator](https://github.com/rust-lang/crater) to automatically build, and test new Rust releases against a huge number of popular crates from both [crates.io](https://crates.io), and [https://github.com](GitHub). 
+One of the reasons the Rust team can release at such a frequency, is their test suite. It uses a open source tool called [crator](https://github.com/rust-lang/crater) to automatically build, and test a huge number of popular crates from both [crates.io](https://crates.io), and [https://github.com](GitHub) against new Rust releases.
 
 At the time of writing, this means that every Rust release candidate is tested against 84,389 crates (52,199 from GitHub, and 32,190 from crates.io).
 
-One of the key takeaways I took from the talk, was that **these test runs take around a week**. They run on a single AWS EC2 instance (as well as a single Microsoft Azure instance). 
+One of the key takeaways I took from the talk, was that **these test runs take around a week**. They currently run on a single AWS EC2 instance (as well as a single Microsoft Azure instance). 
 
-Curiousity got the better of me and I started thinking, could this be improved? Could we shorten these test cycle runs, while keeping the total cost the same? This feels like an embarrassingly parallel problem, well suited to horizontal scaling. Could we shard over lots of EC2 instances? What about technologies such as [AWS Lambda](https://aws.amazon.com/lambda/)?
+Curiousity got the better of me and I started thinking, could this be improved? Could we shorten these test cycle runs, while keeping the total cost the same? This feels like an [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) problem, well suited to horizontal scaling. Could we shard over lots of EC2 instances? What about technologies such as [AWS Lambda](https://aws.amazon.com/lambda/)?
 
 As an [AWS employee](https://www.linkedin.com/in/paul-maddox/), I have the benefit of being able to experiment with AWS services in an account that I am not directly billed for. While there is an emphasis on [frugality](https://www.amazon.jobs/en/principles) at Amazon, being able to experiment and improve these test cycle times at no cost to the Rust team is of benefit to the whole community. 
 
@@ -51,7 +51,16 @@ $ cargo run -- define-ex --ex full --crate-select=full --cap-lints=forbid stable
 $ date
 Wed Dec 11 09:29:18 UTC 2019
 $ time cargo run -- run-graph --ex full --threads 8
-p
+
+# Tests still running... estimates below:
+# Packages Total:                 84,379
+# Packages Processed:             1,014
+# Start Timestamp:                1576056558 
+# Current Timestamp:              1576063553
+# Elapsed Duration:               6995 seconds
+# Packages per Second:            0.1449606862  
+# Estimated time till completion: 6.73 days
+
 ```
 
 ![htop_c5.2xlarge](https://imgur.com/wSSfNl9.png)
@@ -85,6 +94,14 @@ $ date
 Wed Dec 11 10:19:24 UTC 2019
 $ time cargo run -- run-graph --ex full --threads 96
 
+# Tests still running... estimates below:
+# Packages Total:                     84,389
+# Packages Processed:                 4,821
+# Start Timestamp:                    1576059564
+# Current Timestamp:                  1576063231
+# Elapsed Duration:                   3667 seconds
+# Packages per Second:                1.31469866376
+# Estimated seconds for completion:   17.83 hours
 ```
 
 Wheeey, look at all of those CPUs go...
