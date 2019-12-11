@@ -33,17 +33,22 @@ export class Crater extends cdk.Construct {
         // Allow SSH from anywhere
         asg.connections.allowFromAnyIpv4(ec2.Port.tcp(22));
 
-        // Setup the instance ready for crater
-        // asg.addUserData("growpart /dev/nvme0n1 1");
-        // asg.addUserData("resize2fs /dev/nvme0n1p1");
+        // Set up crater
         asg.addUserData("mkfs -t xfs /dev/nvme1n1");
-        asg.addUserData("mkdir -p /var/lib/docker");
-        asg.addUserData("mount /dev/nvme1n1 /var/lib/docker");
+        asg.addUserData("mount /dev/nvme1n1 /root");
+        asg.addUserData("mkdir -p /root/docker");
+        asg.addUserData("ln -sf /root/docker /var/lib/docker");
         asg.addUserData("yum update -y");
-        asg.addUserData("yum install -y git docker");
+        asg.addUserData("yum groupinstall 'Development Tools'");
+        asg.addUserData("yum install -y git docker sqlite-devel openssl-devel");
         asg.addUserData("systemctl enable docker.service");
         asg.addUserData("systemctl start docker.service");
         asg.addUserData("docker pull rustops/crates-build-env");
+        asg.addUserData("git clone https://github.com/rust-lang/crater");
+        asg.addUserData("curl https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init >/tmp/rustup-init");
+        asg.addUserData("chmod +x /tmp/rustup-init");
+        asg.addUserData("/tmp/rustup-init -y --no-modify-path --default-toolchain stable --profile minimal");
+        asg.addUserData("export PATH=/root/.cargo/bin:$PATH")
 
     }
 
