@@ -2,7 +2,7 @@ import cdk = require('@aws-cdk/core');
 import ec2 = require('@aws-cdk/aws-ec2');
 import autoscaling = require('@aws-cdk/aws-autoscaling');
 import { Vpc, AmazonLinuxImage, AmazonLinuxGeneration } from '@aws-cdk/aws-ec2';
-import { BlockDeviceVolume } from '@aws-cdk/aws-autoscaling';
+import { BlockDeviceVolume, UpdateType } from '@aws-cdk/aws-autoscaling';
 
 export interface CraterProps {
     vpc: ec2.IVpc,
@@ -19,14 +19,15 @@ export class Crater extends cdk.Construct {
         const asg = new autoscaling.AutoScalingGroup(this, 'ASG', {
             vpc: props.vpc,
             keyName: props.keyName,
+            updateType: UpdateType.ROLLING_UPDATE,
             instanceType: new ec2.InstanceType(props.instanceType),
             machineImage: new AmazonLinuxImage({
                 generation: AmazonLinuxGeneration.AMAZON_LINUX_2,
             }),
             blockDevices: [{
-                deviceName: "/dev/nvme0n1", // root volume on nitro based instances
+                deviceName: "/dev/nvme1n1", // root volume on nitro based instances
                 volume: BlockDeviceVolume.ebs(2000),
-            }]
+            }],
         })
 
         // Allow SSH from anywhere
