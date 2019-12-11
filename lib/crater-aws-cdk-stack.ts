@@ -8,16 +8,23 @@ export class CraterAwsCdkStack extends cdk.Stack {
 
 
     // Deploy to the default vpc
-    const vpc = ec2.Vpc.fromLookup(this, 'VPC', {
+    const vpc = ec2.Vpc.fromLookup(this, "VPC", {
       isDefault: true,
     })
 
-    const crator = new Crater(this, 'Crater', {
+    const baseline = new Crater(this, "Crater", {
       vpc,
       instanceType: "c5.2xlarge",
-      keyName: "macbook"
+      keyName: "macbook",
+      ebs: true,
     });
 
+    const huge = new Crater(this, 'CraterHuge', {
+      vpc,
+      instanceType: "i3en.24xlarge",
+      keyName: "macbook",
+      ebs: false,
+    })
 
   }
 }

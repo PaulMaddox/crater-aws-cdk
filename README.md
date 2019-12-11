@@ -1,4 +1,4 @@
-# How we increased the Rust compiler test times from x to y
+# How we sped up the rust compiler tests from 1 week to ...?
 
 ## Introduction
 
@@ -17,16 +17,15 @@ On this setup, running a full test run takes:
 ```
 # 
 $ time cargo run -- prepare-local
-real    3m11.985s
-user    9m59.314s
-sys     0m29.150s
+real	3m10.049s
+user	9m46.007s
+sys	0m28.302s
 
-# Run the demo crates
-$ cargo run -- define-ex --ex demo --crate-select=demo --cap-lints=forbid stable beta
-$ time cargo run -- run-graph --ex demo --threads 8
-real    2m22.950s
-user    11m11.867s
-sys     0m19.082s
+# Compile and test all crates
+$ cargo run -- define-ex --ex full --crate-select=full --cap-lints=forbid stable beta
+$ date
+Wed Dec 11 09:29:18 UTC 2019
+$ time cargo run -- run-graph --ex full --threads 8
 
 
 
