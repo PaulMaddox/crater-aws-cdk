@@ -130,6 +130,7 @@ WIP. Rough plan:
 
  - Use [aws-lambda-container-image-converter](https://github.com/awslabs/aws-lambda-container-image-converter) to create Lambda layers from the required docker images
  - Create a [Step Function](https://aws.amazon.com/step-functions/) that enumerates all of the crates to build and test, and then runs a single Lambda invoke for each crate build/test. Aggregate results, and combine to a single SQLite database and generate report.
+  - Step Functions adds in some nice benefits, like automatically retrying failed crate builds which could avoid test flakeyness.
  
  Caveats: 
 
