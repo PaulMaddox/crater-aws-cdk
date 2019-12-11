@@ -19,13 +19,13 @@ export class Crater extends cdk.Construct {
         const asg = new autoscaling.AutoScalingGroup(this, 'ASG', {
             vpc: props.vpc,
             keyName: props.keyName,
-            updateType: UpdateType.ROLLING_UPDATE,
+            updateType: UpdateType.REPLACING_UPDATE,
             instanceType: new ec2.InstanceType(props.instanceType),
             machineImage: new AmazonLinuxImage({
                 generation: AmazonLinuxGeneration.AMAZON_LINUX_2,
             }),
             blockDevices: [{
-                deviceName: "/dev/nvme1n1", // root volume on nitro based instances
+                deviceName: "/dev/nvme1n1",
                 volume: BlockDeviceVolume.ebs(2000),
             }],
         })
