@@ -3,7 +3,7 @@
 ## Introduction
 
 I recently watched a great talk delivered by
- [Pietro Albini](https://twitter.com/pietroalbini), one of the Rust core team members. It talked about how Rust ships a new release of their compiler every six weeks.
+ [Pietro Albini](https://twitter.com/pietroalbini), who co-leads the Rust Infrastructure Team. In the talk, he discusses how Rust ships a new release of their compiler every six weeks.
 
 [![Shipping a stable compiler every six weeks](http://img.youtube.com/vi/As1gXp5kX1M/0.jpg)](http://www.youtube.com/watch?v=As1gXp5kX1M "Shipping a stable compiler every six weeks")
 
